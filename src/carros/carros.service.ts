@@ -16,44 +16,38 @@ export class CarrosService {
     return carros;
   }
 
-  // async listUserById(id: number): Promise<Carros> {
-  //   return await this.carrosRepository.findByIds(id);
-  // }
+  async addCarros(carro:Carros):Promise<Carros>{
+    return await this.carrosRepository.save(carro);
+  }
 
-  async returntoken(): Promise<any> {
-    //   const axios: AxiosResponse
-    //   const headers = {};
-    //   const response = await axios
-    //     .request(
-    //       'https://ads-stflabs-workplace-api-backend.develop.stefanini.io/login',
-    //       {
-    //         username: 'bcsantos1',
-    //         password: '@Yahoo.com.f8',
-    //         language: ''
-    //       },
-    //       headers,
-    //     )
-    //     .toPromise();
-    //   return response.data;
+  async deleteCarros(id:number){
+    return await this.carrosRepository.delete(id);
+  }
+
+  async listUserById(id: number): Promise<Carros> {
+    return await this.carrosRepository.findOne(id)
+  }
+
+  async returntoken(username:string,password:string): Promise<any> {
     const headers = {};
+    
     var axios = require('axios');
-    try{
-    return await axios
-      .post(
-        'https://ads-stflabs-workplace-api-backend.develop.stefanini.io/login',
-        {
-          username: 'bcsantos1',
-          password: '@Yahoo.comaaa',
-          language: '',
+    try {
+      return await axios
+        .post(
+          'https://ads-stflabs-workplace-api-backend.develop.stefanini.io/login',
+          { 
+          username,
+          password,
         },
-        headers,
-      )
-      .then(function (response) {
-        console.log('status code:', response.status);
-        return response.data ;
-      });
-    }catch(erro){
-      return {'status':erro.message}
+          headers,
+        )
+        .then( (response) =>{
+          console.log('status code:', response.status);
+          return response.data;
+        });
+    } catch (erro) {
+      return { status: erro.message };
     }
   }
 }
