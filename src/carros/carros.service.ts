@@ -28,26 +28,4 @@ export class CarrosService {
     return await this.carrosRepository.findOne(id)
   }
 
-  async returntoken(username:string,password:string): Promise<any> {
-    const headers = {};
-    
-    var axios = require('axios');
-    try {
-      return await axios
-        .post(
-          'https://ads-stflabs-workplace-api-backend.develop.stefanini.io/login',
-          { 
-          username,
-          password,
-        },
-          headers,
-        )
-        .then( (response) =>{
-          console.log('status code:', response.status);
-          return response.data;
-        });
-    } catch (erro) {
-      return { status: erro.message };
-    }
-  }
 }
