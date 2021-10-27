@@ -1,3 +1,4 @@
+import { idCarroDTO, createCarroDTO, editCarroDTO } from './dto/carros.dto';
 import { Carros } from './carros.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable, Controller, HttpService } from '@nestjs/common';
@@ -16,16 +17,20 @@ export class CarrosService {
     return carros;
   }
 
-  async addCarros(carro:Carros):Promise<Carros>{
+  async addCarros(carro:createCarroDTO):Promise<Carros>{
     return await this.carrosRepository.save(carro);
   }
 
-  async deleteCarros(id:number){
-    return await this.carrosRepository.delete(id);
+  async editCarros(carro:editCarroDTO):Promise<Carros>{
+    return await this.carrosRepository.save(carro);
   }
 
-  async listUserById(id: number): Promise<Carros> {
-    return await this.carrosRepository.findOne(id)
+  async deleteCarros(carro: idCarroDTO){
+    return await this.carrosRepository.delete(carro.id);
+  }
+
+  async listCarroById(carro: idCarroDTO): Promise<Carros> {
+    return await this.carrosRepository.findOne(carro.id)
   }
 
 }

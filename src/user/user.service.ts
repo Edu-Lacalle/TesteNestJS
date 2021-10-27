@@ -1,3 +1,4 @@
+import { createUserDTO, idUserDTO, editUserDTO } from './dto/user.dto';
 import { User } from './user.entity';
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,17 +16,15 @@ export class UserService {
     return users;
   }
 
-  
-
-  async addUser(name:string,password:string){
-    const user ={
-      name:name,
-      password:password
-    }
+  async addUser(user:createUserDTO){
     this.userRepository.save(user)
   }
 
-  async deleteUser(id:number){
-    this.userRepository.delete(id)
+  async editUser(user:editUserDTO){
+    return await this.userRepository.save(user)
+  }
+
+  async deleteUser(user:idUserDTO){
+    this.userRepository.delete(user.id)
   }
 }
